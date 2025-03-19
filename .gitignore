@@ -1,0 +1,6 @@
+.streamlit/
+scripts/
+venv/
+.vscode/
+chroma_db/
+data/

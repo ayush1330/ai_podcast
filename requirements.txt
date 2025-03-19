@@ -1,0 +1,13 @@
+streamlit
+openai
+langchain
+langchain-community 
+langchain-openai
+llama-index
+chromadb
+requests
+python-dotenv
+pydantic
+wikipedia 
+duckduckgo-search
+fpdf
