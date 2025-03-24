@@ -4,49 +4,25 @@ import streamlit as st
 import time
 import os
 from core.coordinator import build_workflow
-from fpdf import FPDF
-import unicodedata
+import openai
+from tools.text_to_speech import generate_speech
 
-
-def save_script_to_pdf(script_text: str, filename: str = "podcast_script.pdf"):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-
-    # Clean text of problematic Unicode characters
-    def clean_text(text):
-        # Replace smart quotes with regular quotes
-        text = text.replace("\u2018", "'").replace("\u2019", "'")
-        text = text.replace("\u201c", '"').replace("\u201d", '"')
-        # Replace other common Unicode characters
-        text = text.replace("\u2013", "-").replace("\u2014", "--")
-        text = text.replace("\u2026", "...")
-        return text
-
-    # Apply text cleaning
-    cleaned_text = clean_text(script_text)
-
-    # Process by line
-    for line in cleaned_text.split("\n"):
-        pdf.multi_cell(0, 10, line)
-
-    if not os.path.exists("scripts"):
-        os.makedirs("scripts")
-    pdf_path = os.path.join("scripts", filename)
-    pdf.output(pdf_path)
-    return pdf_path
-
+# Load OpenAI API key from Streamlit secrets
+if "OPENAI_API_KEY" in st.secrets:
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
+elif "openai_api_key" in st.secrets:
+    openai.api_key = st.secrets["openai_api_key"]
 
 def main():
     st.title("AI-Driven Podcast Script Generator")
+    
     topics = st.text_input("Enter topic(s)", value="RAG, Fine-tuning, Vector Databases")
     direction = st.text_area(
         "Enter podcast instructions",
         value="Explain how these technologies impact AI careers.",
     )
-    speaker_style = st.selectbox("Number of speakers", ["One speaker", "Two speakers"])
 
-    if st.button("Generate Script & Save as PDF"):
+    if st.button("Generate Script & Audio"):
         st.info("Generating script...")
         time.sleep(1)  # Simulate delay for visual effect.
 
@@ -54,16 +30,27 @@ def main():
         state = {
             "topics": topics,
             "direction": direction,
-            "speaker_style": speaker_style,
+            "speaker_style": "One speaker",  # Hardcoded to one speaker
         }
         final_state = workflow.invoke(state)
         script_output = final_state.get("script_output", "No script generated.")
 
-        pdf_path = save_script_to_pdf(script_output)
-        st.success("Done")
         st.write("Generated Script:")
         st.text_area("", value=script_output, height=300)
-        st.write(f"Script saved as PDF: {pdf_path}")
+        
+        # Convert text to speech
+        if openai.api_key:
+            st.info("Converting script to audio...")
+            audio_path = generate_speech(script_output)
+            
+            if audio_path:
+                st.success("Audio generated successfully!")
+                st.write("Listen to your podcast:")
+                st.audio(audio_path)
+            else:
+                st.error("Failed to generate audio. Please check the API key in your .streamlit/secrets.toml file.")
+        else:
+            st.error("OpenAI API key not found in Streamlit secrets. Please add it to your .streamlit/secrets.toml file as OPENAI_API_KEY or openai_api_key.")
 
 
 if __name__ == "__main__":
