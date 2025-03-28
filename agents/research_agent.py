@@ -11,7 +11,7 @@ def research_node(state: dict) -> Command:
     """
     topics = state.get("topics", "")
     knowledge_level = state.get(
-        "knowledge_level", "intermediate"
+        "knowledge_level", ""
     )  # Get knowledge level
 
     research_chain = create_research_chain()

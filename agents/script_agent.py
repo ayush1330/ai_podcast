@@ -13,13 +13,11 @@ def script_node(state: dict) -> Command:
     research_output = state.get("research_output", "")
     direction = state.get("direction", "")
     speaker_style = state.get("speaker_style", "")
-    knowledge_level = state.get(
-        "knowledge_level", "intermediate"
-    )  # Get knowledge level
+    knowledge_level = state.get("knowledge_level", "")  # Get knowledge level
     # Get new parameters
-    desired_outcome = state.get("desired_outcome", "learning")
-    preferred_length = state.get("preferred_length", "3 mins")
-    format_preference = state.get("format_preference", "storytelling")
+    desired_outcome = state.get("desired_outcome", "")
+    preferred_length = state.get("preferred_length", "")
+    format_preference = state.get("format_preference", "")
 
     script_chain = create_script_chain()
     # Run the chain with the necessary inputs.
