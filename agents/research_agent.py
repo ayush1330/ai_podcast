@@ -10,9 +10,7 @@ def research_node(state: dict) -> Command:
     Reads the 'topics' field from state and updates state with 'research_output'.
     """
     topics = state.get("topics", "")
-    knowledge_level = state.get(
-        "knowledge_level", ""
-    )  # Get knowledge level
+    knowledge_level = state.get("knowledge_level", "")  # Get knowledge level
 
     research_chain = create_research_chain()
     # Run the chain with the topics input and knowledge level.
