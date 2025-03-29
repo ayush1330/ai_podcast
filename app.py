@@ -25,7 +25,7 @@ st.markdown(
     /* Import a modern Google Font (Poppins) */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    /* Global settings: dark background, improved text color */
+    /* Global settings */
     html, body, [class*="css"]  {
         font-family: 'Poppins', sans-serif;
         background-color: #1F1F1F;
@@ -50,24 +50,15 @@ st.markdown(
     .subheading {
         color: #BDBDBD;
         font-size: 1rem;
-        margin: 0.25rem 0 1.5rem 0;
+        margin: 0.1rem 0 0.1rem 0;
     }
 
     /* A thin horizontal line */
     .thin-line {
         border: none;
         border-bottom: 1px solid #666666;
-        margin: 1rem 0;
+        margin: 0.1rem 0;
         width: 100%;
-    }
-
-    /* Card container for form elements */
-    .card {
-        background-color: #2A2A2A;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        margin-bottom: 1rem; /* Reduced spacing */
     }
 
     /* Form labels */
@@ -81,7 +72,7 @@ st.markdown(
 
     /* Buttons */
     div.stButton > button {
-        background-color: #9C27B0; /* Purple accent color */
+        background-color: #9C27B0;
         color: #FFFFFF;
         border-radius: 8px;
         font-weight: 600;
@@ -91,7 +82,7 @@ st.markdown(
         transition: background-color 0.3s ease;
     }
     div.stButton > button:hover {
-        background-color: #7B1FA2; /* Darker purple on hover */
+        background-color: #7B1FA2;
     }
 
     /* Info, success, error boxes styling */
@@ -115,11 +106,11 @@ st.markdown(
 def main():
     # Minimal heading
     st.markdown(
-        "<h1 class='main-heading'>Personalized Podcast with Your Host AI</h1>",
+        "<h1 class='main-heading'>Personalized Podcast with Your Host AI 🎙️ </h1>",
         unsafe_allow_html=True,
     )
     st.markdown(
-        "<p class='subheading'>Generate custom, AI-driven podcast scripts tailored to your needs.</p>",
+        "<p class='subheading'>Generate custom, AI-driven podcast tailored to your needs.</p>",
         unsafe_allow_html=True,
     )
 
@@ -134,9 +125,9 @@ def main():
 
         with col1:
             # Text input for topics
-            topics = st.text_input("Enter topic(s)", value="")
+            topics = st.text_area("Enter topic(s)", value="")
             # Text area for additional instructions
-            direction = st.text_input("Enter podcast instructions", value="")
+            direction = st.text_area("Enter podcast instructions", value="")
 
         with col2:
             # Knowledge level dropdown
