@@ -41,6 +41,5 @@ Thumbs.db
 
 chroma_db/
 data/
-agents/
 core/__pycache__
 tools\__pycache__
